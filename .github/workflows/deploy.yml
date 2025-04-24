@@ -55,12 +55,13 @@ jobs:
 
       - name: Configure DEV AWS credentials
         id: aws-dev-credentials
-        if: ${{ inputs.stage == 'develop' }}
+        if: ${{ inputs.stage == 'dev' }}
         continue-on-error: true
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ inputs.aws_region}} 
    
       #- name: bootstrap  CdkApisvectorEdivisasStack   
       #  run:  cdk bootstrap  CdkApisvectorEdivisasStack 
