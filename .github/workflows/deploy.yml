@@ -10,11 +10,11 @@ on:
       environment:
         description: 'Set the environment'     
         required: true
-        default: 'develop'
+        default: 'dev'
       stage:
         description: 'Set the stage to be deployed'     
         required: true
-        default: 'develop'
+        default: 'dev'
       aws_region:
         description: 'Set the AWS Region'     
         required: true
