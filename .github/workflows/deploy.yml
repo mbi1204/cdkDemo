@@ -1,0 +1,74 @@
+name: CDK Deploy
+
+on: 
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Set the  action'     
+        required: true
+        default: 'deploy'
+      environment:
+        description: 'Set the environment'     
+        required: true
+        default: 'develop'
+      stage:
+        description: 'Set the stage to be deployed'     
+        required: true
+        default: 'develop'
+      aws_region:
+        description: 'Set the AWS Region'     
+        required: true
+        default: 'us-east-1'
+
+
+
+
+jobs:
+  deploy:
+    name: deploy
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "💡 The ${{ inputs.aws_region }}  aws_region."
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'         
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install AWS CDK
+        run: npm i -g aws-cdk
+
+    
+
+      - name: Configure DEV AWS credentials
+        id: aws-dev-credentials
+        if: ${{ inputs.stage == 'develop' }}
+        continue-on-error: true
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ORG_AWS_GITHUB_ROLE}}
+          aws-region: ${{ inputs.aws_region }}
+   
+      #- name: bootstrap  CdkApisvectorEdivisasStack   
+      #  run:  cdk bootstrap  CdkApisvectorEdivisasStack 
+
+    
+
+      - name: Synth CdkApisvectorEdivisasStack
+        run: cdk synth CdkApisvectorEdivisasStack
+
+      - name: Deploy CdkApisvectorEdivisasStack
+        run: cdk deploy CdkApisvectorEdivisasStack --require-approval never --verbose
