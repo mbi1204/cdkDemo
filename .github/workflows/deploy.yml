@@ -58,11 +58,8 @@ jobs:
         if: ${{ inputs.stage == 'dev' }}
         continue-on-error: true
         uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: ${{ inputs.aws_region}} 
-   
+        with:          
+          role-to-assume: ${{ vars.AWS_GITHUB_ROLE }}
       #- name: bootstrap  CdkApisvectorEdivisasStack   
       #  run:  cdk bootstrap  CdkApisvectorEdivisasStack 
 
