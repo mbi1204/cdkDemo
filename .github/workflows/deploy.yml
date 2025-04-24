@@ -68,8 +68,8 @@ jobs:
 
     
 
-      - name: Synth CdkApisvectorEdivisasStack
-        run: cdk synth CdkApisvectorEdivisasStack
+      - name: Synth CdkDemoStack
+        run: cdk synth CdkDemoStack
 
-      - name: Deploy CdkApisvectorEdivisasStack
-        run: cdk deploy CdkApisvectorEdivisasStack --require-approval never --verbose
+      - name: Deploy CdkDemoStack
+        run: cdk deploy CdkDemoStack --require-approval never --verbose
