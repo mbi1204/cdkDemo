@@ -17,7 +17,7 @@ export class CdkDemoStack extends cdk.Stack {
     const myFunction = new lambda.Function(this, "fnDivisas", {
      runtime: lambda.Runtime.NODEJS_20_X, // Provide any supported Node.js runtime
      handler: "index.handler",   
-     code: lambda.Code.fromAsset("./lambda/prueba"),
+     code: lambda.Code.fromAsset("lambda/prueba"),
    });
    
   }
